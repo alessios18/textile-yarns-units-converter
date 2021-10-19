@@ -1,0 +1,37 @@
+<div class="container">
+    <!-- Content here -->
+    <div class="row align-items-center">
+      <div class="col-md-5">
+          <div class="row">
+              <mat-form-field class="col-sm-8 justify-content-left" appearance="fill">
+                <mat-label>Size</mat-label>
+                <input matInput type="number" [(ngModel)]="originalValue"/>
+              </mat-form-field>
+              <div class="col-sm-4"> 
+                <mat-label>Unit</mat-label>
+                <mat-select class="justify-content-right" (selectionChange)="onChangeUnit($event)" placeholder="{{selectedTitr}}">
+                  <mat-option *ngFor="let titr of titrations" [value]="titr.descr">
+                    {{titr.descr}}
+                  </mat-option>
+                </mat-select>
+              </div>
+             
+          </div>
+      </div>
+      <div class="col-sm-2">
+        <button mat-raised-button class="middle" style="vertical-align: middle " type="button" title="CONVERT" value="CONVERT" (click)="convert()">CONVERT</button>
+      </div>
+      <div class="col-md-5">
+        <div class="row top5">
+          <div class="form-group" *ngFor="let titr of titrations">
+            <div class="col-md-5">
+              <mat-form-field class="justify-content-left" appearance="fill" >
+              <mat-label  for="descr">{{titr.descr}} - {{titr.units}}</mat-label>
+                <input matInput type="number" [(ngModel)]="titrations[titr.id].value" disabled/>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
