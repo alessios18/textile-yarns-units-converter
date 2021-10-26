@@ -1,12 +1,9 @@
 {
   "name": "textile-yarns-units-converter",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "main": "main.js",
   "private": true,
   "dependencies": {
-    "@angular/animations": "^12.2.11",
-    "@angular/cdk": "^12.2.11",
-    "@angular/material": "^12.2.11",
     "@electron/remote": "1.2.0"
   }
 }
