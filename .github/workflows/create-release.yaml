@@ -123,7 +123,7 @@ jobs:
           
   macos_release:
     needs: Make_GitHub_Release
-    name: Build And Upload Linux Release
+    name: Build And Upload MacOs Release
     runs-on: macos-latest
     steps:
       - name: Check out Git repository
