@@ -92,6 +92,23 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
           FILES: "./release/${{ matrix.artifact_name }}#${{ matrix.asset_name }}"
           NODE_OPTIONS: "--max-old-space-size=4096"
+      - name: Upload latest-linux.yml on Release
+        id: upload_release_latest-mac
+        run: |
+          gh release upload "v${{ steps.package_version.outputs.version }}" "./release/latest-linux.yml#latest-linux.yml"
+        if: ${{ matrix.os }} == macos-latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          NODE_OPTIONS: "--max-old-space-size=4096"
+      - name: Upload latest-mac.yml on Release
+        id: upload_release_latest-mac
+        run: |
+          gh release upload "v${{ steps.package_version.outputs.version }}" "./release/latest-mac.yml#latest-mac.yml"
+        if: ${{ matrix.os }} == ubuntu-latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          NODE_OPTIONS: "--max-old-space-size=4096"      
+
   upload_latest_mac:
     needs: release
     name: Upload latest-mac.yml on Release 

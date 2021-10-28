@@ -1,12 +1,14 @@
 {
   "name": "textile-yarns-units-converter",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "main": "main.js",
   "private": true,
   "dependencies": {
     "@electron/remote": "1.2.0",
-    "dotenv": "^10.0.0",
     "electron-log": "^4.4.1",
     "electron-updater": "^4.3.8"
+  },
+  "devDependencies": {
+    "dotenv": "^10.0.0"
   }
 }
