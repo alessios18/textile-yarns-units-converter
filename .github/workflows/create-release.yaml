@@ -66,6 +66,7 @@ jobs:
       - run: npm run electron:build
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
+
       - name: Upload Release Asset
         id: upload_release_asset
         run: |
@@ -73,6 +74,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
           NODE_OPTIONS: "--max-old-space-size=4096"
+
       - name: Upload Release Asset Latest
         id: upload_release_asset_latest
         run: |
@@ -110,6 +112,7 @@ jobs:
       - run: npm run electron:build
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
+
       - name: Upload Release Asset
         id: upload_release_asset
         run: |
@@ -117,6 +120,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
           NODE_OPTIONS: "--max-old-space-size=4096"
+          
   macos_release:
     needs: Make_GitHub_Release
     name: Build And Upload Linux Release
