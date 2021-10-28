@@ -48,7 +48,7 @@ jobs:
             artifact_name: "textile-yarns-units-converter-${{ needs.Make_GitHub_Release.outputs.version }}.AppImage"
             asset_name: "textile-yarns-units-converter-${{ needs.Make_GitHub_Release.outputs.version }}.AppImage"
             asset_content_type: application/zip
-            command: gh release upload "v${{ steps.package_version.outputs.version }}" "./release/latest-linux.yml#latest-linux.yml"
+            command: gh release upload "v${{ needs.Make_GitHub_Release.outputs.version }}" "./release/latest-linux.yml#latest-linux.yml"
           - os: windows-latest
             # by electron-builder  |
             artifact_name: "textile-yarns-units-converter ${{ needs.Make_GitHub_Release.outputs.version }}.exe"
@@ -59,7 +59,7 @@ jobs:
             artifact_name: "textile-yarns-units-converter-${{ needs.Make_GitHub_Release.outputs.version }}.dmg"
             asset_name: "textile-yarns-units-converter-${{ needs.Make_GitHub_Release.outputs.version }}.dmg"
             asset_content_type: application/x-apple-diskimage
-            command: gh release upload "v${{ steps.package_version.outputs.version }}" "./release/latest-mac.yml#latest-mac.yml"
+            command: gh release upload "v${{ needs.Make_GitHub_Release.outputs.version }}" "./release/latest-mac.yml#latest-mac.yml"
 
     steps:
       - name: Check out Git repository
