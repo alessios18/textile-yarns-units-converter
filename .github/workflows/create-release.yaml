@@ -37,30 +37,10 @@ jobs:
       - id: step_version
         run: echo "::set-output name=version::${{ steps.package_version.outputs.version }}"
 
-  release:
+  linux_release:
     needs: Make_GitHub_Release
-    name: Build And Upload Release
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        include:
-          - os: ubuntu-latest
-            artifact_name: "textile-yarns-units-converter-${{ needs.Make_GitHub_Release.outputs.version }}.AppImage"
-            asset_name: "textile-yarns-units-converter-${{ needs.Make_GitHub_Release.outputs.version }}.AppImage"
-            asset_content_type: application/zip
-            command: gh release upload "v${{ needs.Make_GitHub_Release.outputs.version }}" "./release/latest-linux.yml#latest-linux.yml"
-          - os: windows-latest
-            # by electron-builder  |
-            artifact_name: "textile-yarns-units-converter ${{ needs.Make_GitHub_Release.outputs.version }}.exe"
-            asset_name: "textile-yarns-units-converter ${{ needs.Make_GitHub_Release.outputs.version }}.exe"
-            asset_content_type: application/exe
-            command: gh -h
-          - os: macos-latest
-            artifact_name: "textile-yarns-units-converter-${{ needs.Make_GitHub_Release.outputs.version }}.dmg"
-            asset_name: "textile-yarns-units-converter-${{ needs.Make_GitHub_Release.outputs.version }}.dmg"
-            asset_content_type: application/x-apple-diskimage
-            command: gh release upload "v${{ needs.Make_GitHub_Release.outputs.version }}" "./release/latest-mac.yml#latest-mac.yml"
-
+    name: Build And Upload Linux Release
+    runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
@@ -89,20 +69,97 @@ jobs:
       - name: Upload Release Asset
         id: upload_release_asset
         run: |
-          gh release upload "v${{ steps.package_version.outputs.version }}" "${{ env.FILES }}"
+          gh release upload "v${{ steps.package_version.outputs.version }}" "./release/textile-yarns-units-converter-${{ needs.Make_GitHub_Release.outputs.version }}.AppImage#textile-yarns-units-converter-${{ needs.Make_GitHub_Release.outputs.version }}.AppImage"
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
-          FILES: "./release/${{ matrix.artifact_name }}#${{ matrix.asset_name }}"
           NODE_OPTIONS: "--max-old-space-size=4096"
       - name: Upload Release Asset Latest
         id: upload_release_asset_latest
         run: |
-          ${{matrix.command}}
+          gh release upload "v${{ needs.Make_GitHub_Release.outputs.version }}" "./release/latest-linux.yml#latest-linux.yml"
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
-          COMMAND: ${{matrix.command}}
           NODE_OPTIONS: "--max-old-space-size=4096"
-   
+
+  win_release:
+    needs: Make_GitHub_Release
+    name: Build And Upload Windows Release
+    runs-on: windows-latest
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
+      - name: Read package.json
+        uses: tyankatsu0105/read-package-version-actions@v1
+        id: package_version
+
+      - name: Context
+        env:
+          RUNNER_CONTEXT: ${{ toJson( needs.Make_GitHub_Release ) }}
+        run: |
+          echo "$RUNNER_CONTEXT"
+          echo "Version is ${{ needs.Make_GitHub_Release.outputs.version }}"
+
+      - run: npm install
+      - run: npm run postinstall
+      - run: npm run electron:build
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+      - name: Upload Release Asset
+        id: upload_release_asset
+        run: |
+          gh release upload "v${{ steps.package_version.outputs.version }}" "./release/textile-yarns-units-converter ${{ needs.Make_GitHub_Release.outputs.version }}.exe#textile-yarns-units-converter ${{ needs.Make_GitHub_Release.outputs.version }}.exe"
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          NODE_OPTIONS: "--max-old-space-size=4096"
+  macos_release:
+    needs: Make_GitHub_Release
+    name: Build And Upload Linux Release
+    runs-on: macos-latest
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
+      - name: Read package.json
+        uses: tyankatsu0105/read-package-version-actions@v1
+        id: package_version
+
+      - name: Context
+        env:
+          RUNNER_CONTEXT: ${{ toJson( needs.Make_GitHub_Release ) }}
+        run: |
+          echo "$RUNNER_CONTEXT"
+          echo "Version is ${{ needs.Make_GitHub_Release.outputs.version }}"
+
+      - run: npm install
+      - run: npm run postinstall
+      - run: npm run electron:build
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+      - name: Upload Release Asset
+        id: upload_release_asset
+        run: |
+          gh release upload "v${{ steps.package_version.outputs.version }}" "./release/textile-yarns-units-converter-${{ needs.Make_GitHub_Release.outputs.version }}.dmg#textile-yarns-units-converter-${{ needs.Make_GitHub_Release.outputs.version }}.dmg"
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          NODE_OPTIONS: "--max-old-space-size=4096"
+      - name: Upload Release Asset Latest
+        id: upload_release_asset_latest
+        run: |
+          gh release upload "v${{ needs.Make_GitHub_Release.outputs.version }}" "./release/latest-mac.yml#latest-mac.yml"
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          NODE_OPTIONS: "--max-old-space-size=4096"
 
   # upload_latest_mac:
   #   needs: release
