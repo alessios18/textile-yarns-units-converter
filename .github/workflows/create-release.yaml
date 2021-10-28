@@ -97,7 +97,7 @@ jobs:
       - name: Upload Release Asset Latest
         id: upload_release_asset_latest
         run: |
-          ${{env.command}}
+          ${{matrix.command}}
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
           COMMAND: ${{matrix.command}}
