@@ -28,8 +28,6 @@ jobs:
         id: create_release
         run: |
           gh release create "${{ env.VERSION }}" -n "${{ env.MESSAGE }}" -t "${{ env.NAME }}"
-      - run: |
-          gh release upload "v${{ env.VERSION }}" "./release/latest-linux.yml#latest-linux.yml"
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
           VERSION: "v${{ steps.package_version.outputs.version }}"
@@ -107,6 +105,18 @@ jobs:
         id: upload_release_latest-mac
         run: |
           gh release upload "v${{ steps.package_version.outputs.version }}" "./release/latest-linux.yml#text"
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          NODE_OPTIONS: "--max-old-space-size=4096"
+  upload_latest_linux:
+    needs: release
+    name: Upload latest-linux.yml on Release 
+    runs-on: macos-latest
+    steps:
+      - name: Upload latest-linux.yml on Release
+        id: upload_release_latest-mac
+        run: |
+          gh release upload "v${{ steps.package_version.outputs.version }}" "./release/latest-linux.yml#latest-linux.yml"
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
           NODE_OPTIONS: "--max-old-space-size=4096"
