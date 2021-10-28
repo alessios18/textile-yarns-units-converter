@@ -57,10 +57,6 @@ jobs:
             artifact_name: "textile-yarns-units-converter-${{ needs.Make_GitHub_Release.outputs.version }}.dmg"
             asset_name: "textile-yarns-units-converter-${{ needs.Make_GitHub_Release.outputs.version }}.dmg"
             asset_content_type: application/x-apple-diskimage
-          - os: macos-latest
-            artifact_name: "latest-mac.yml"
-            asset_name: "latest-mac.yml"
-            asset_content_type: text
 
     steps:
       - name: Check out Git repository
@@ -104,7 +100,7 @@ jobs:
       - name: Upload latest-mac.yml on Release
         id: upload_release_latest-mac
         run: |
-          gh release upload "v${{ steps.package_version.outputs.version }}" "./release/latest-linux.yml#text"
+          gh release upload "v${{ steps.package_version.outputs.version }}" "./release/latest-mac.yml#latest-mac.yml"
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
           NODE_OPTIONS: "--max-old-space-size=4096"
