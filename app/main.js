@@ -6,6 +6,11 @@ var fs = require("fs");
 var url = require("url");
 // Initialize remote module
 require('@electron/remote/main').initialize();
+var log = require('electron-log');
+var autoUpdater = require("electron-updater").autoUpdater;
+require('dotenv').config({ path: '.env' });
+autoUpdater.logger = log;
+autoUpdater.logger.transports.console.level = 'info';
 var win = null;
 var args = process.argv.slice(1), serve = args.some(function (val) { return val === '--serve'; });
 function createWindow() {
@@ -62,7 +67,16 @@ try {
     // initialization and is ready to create browser windows.
     // Some APIs can only be used after this event occurs.
     // Added 400 ms to fix the black background issue while using transparent window. More detais at https://github.com/electron/electron/issues/15947
-    electron_1.app.on('ready', function () { return setTimeout(createWindow, 400); });
+    electron_1.app.on('ready', function () {
+        autoUpdater.setFeedURL({ provider: 'github',
+            owner: 'alessios18',
+            repo: 'textile-yarns-units-converter',
+            token: process.env.GITHUB_TOKEN,
+            private: false });
+        console.log("checkForUpdatesAndNotify");
+        autoUpdater.checkForUpdatesAndNotify();
+        setTimeout(createWindow, 400);
+    });
     // Quit when all windows are closed.
     electron_1.app.on('window-all-closed', function () {
         // On OS X it is common for applications and their menu bar
@@ -77,6 +91,24 @@ try {
         if (win === null) {
             createWindow();
         }
+    });
+    autoUpdater.on('checking-for-update', function () {
+        console.log("checking-for-update");
+    });
+    autoUpdater.on('update-available', function (info) {
+        console.log("update-available");
+    });
+    autoUpdater.on('update-not-available', function (info) {
+        console.log("update-not-available");
+    });
+    autoUpdater.on('error', function (err) {
+    });
+    autoUpdater.on('download-progress', function (progressObj) {
+        console.log("download-progress");
+    });
+    autoUpdater.on('update-downloaded', function (info) {
+        console.log("update-downloaded");
+        autoUpdater.quitAndInstall();
     });
 }
 catch (e) {

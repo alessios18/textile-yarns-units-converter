@@ -7,6 +7,10 @@
     "name": "Alessio Segantin",
     "email": "alessios.18@gmail.com"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alessios18/textile-yarns-units-converter"
+  },
   "keywords": [
     "angular",
     "angular 12",
@@ -79,7 +83,7 @@
     "conventional-changelog-cli": "2.1.1",
     "cross-env": "7.0.3",
     "electron": "13.1.7",
-    "electron-builder": "22.11.9",
+    "electron-builder": "22.11.7",
     "electron-reload": "1.5.0",
     "eslint": "7.30.0",
     "eslint-plugin-import": "2.23.4",
