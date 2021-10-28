@@ -4,8 +4,6 @@
   "main": "main.js",
   "private": true,
   "dependencies": {
-    "@electron/remote": "1.2.0",
-    "electron-log": "^4.4.1",
-    "electron-updater": "^4.3.8"
+    "@electron/remote": "1.2.0"
   }
 }
