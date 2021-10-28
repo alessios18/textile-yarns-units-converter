@@ -7,8 +7,5 @@
     "@electron/remote": "1.2.0",
     "electron-log": "^4.4.1",
     "electron-updater": "^4.3.8"
-  },
-  "devDependencies": {
-    "dotenv": "^10.0.0"
   }
 }

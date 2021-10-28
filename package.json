@@ -104,7 +104,8 @@
     "ts-node": "10.1.0",
     "typescript": "~4.2.0",
     "wait-on": "5.0.1",
-    "webdriver-manager": "12.1.8"
+    "webdriver-manager": "12.1.8",
+    "dotenv": "^10.0.0"
   },
   "engines": {
     "node": ">=14.0.0"

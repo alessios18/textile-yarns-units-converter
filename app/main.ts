@@ -80,7 +80,6 @@ try {
   // Some APIs can only be used after this event occurs.
   // Added 400 ms to fix the black background issue while using transparent window. More detais at https://github.com/electron/electron/issues/15947
   app.on('ready', () => {
-    
     autoUpdater.setFeedURL({provider: 'github'
     , owner: 'alessios18'
     , repo: 'textile-yarns-units-converter'
