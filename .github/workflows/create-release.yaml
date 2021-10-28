@@ -86,14 +86,20 @@ jobs:
       - run: npm run electron:build
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
-
       - name: Upload Release Asset
         id: upload_release_asset
         run: |
-          ${matrix.command}
+          gh release upload "v${{ steps.package_version.outputs.version }}" "${{ env.FILES }}"
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
           FILES: "./release/${{ matrix.artifact_name }}#${{ matrix.asset_name }}"
+          NODE_OPTIONS: "--max-old-space-size=4096"
+      - name: Upload Release Asset Latest
+        id: upload_release_asset_latest
+        run: |
+          ${[matrix.command}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
           NODE_OPTIONS: "--max-old-space-size=4096"
    
 
