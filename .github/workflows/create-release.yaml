@@ -97,9 +97,10 @@ jobs:
       - name: Upload Release Asset Latest
         id: upload_release_asset_latest
         run: |
-          ${[matrix.command}}
+          ${{env.command}}
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          COMMAND: ${[matrix.command}}
           NODE_OPTIONS: "--max-old-space-size=4096"
    
 
