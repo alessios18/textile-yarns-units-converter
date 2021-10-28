@@ -1,49 +1,56 @@
-<div class="head d-flex justify-content-center" style="height: 100vh;
-overflow: auto;">
-  <div class="container row align-items-center" style="height: 100vh; ">
-      <!-- Content here -->
-      <div class="row align-items-center justify-content-center" style="vertical-align: middle;">
-        <div class="col-md-6 col-lg-6 col-xl-6 ">
-            <div class="row d-flex justify-content-left" appearance="fill">
-              <p>Special size values examples:</p>
-                <p><b>Nm:</b> 2/60000</p>
-                <p><b>Ne:</b> 60000/2</p>
-                <p><b>Dtex:</b> 2*120/4</p>
-            </div>
-            <div class="row align-items-center d-flex justify-content-left" appearance="fill">
-                <div class="col-sm-4 col-md-4 m-4 justify-content-center" appearance="fill">
-                    <label class="form-label" class="form-label">Size</label>
-                    <input class="form-control" type="text" [(ngModel)]="originalValue"/>
-                </div>
-                <div class="col-sm-4 col-md-4 m-4 justify-content-left" appearance="fill"> 
-                    <label class="form-label">Unit</label>
-                    <select class=" form-select" (change)="onChangeUnit($event)" [value]="selectedTitr">
-                      <option *ngFor="let titr of titrations" [value]="titr.descr">
-                          {{titr.descr}}
-                      </option>
-                    </select>
-                </div>
-
-                <div class="col-sm-4 col-md-4 m-4 align-items-center" appearance="fill">
-                  <button class="btn btn-primary"  type="button" title="CONVERT" value="CONVERT" (click)="convert()">CONVERT</button>
-                </div>
-            </div>
-            <div class="row align-items-center d-flex justify-content-left" appearance="fill">
-
-            </div>
+<div class="panel-body">
+  <div class="head d-flex justify-content-center" style="height: 100vh;
+  overflow: auto;">
+    <div class="container row align-items-center" style="height: 100vh; ">
+        <!-- Content here -->
+        <div class="row">
+          <div class="col-xs-12">
+              <div class="pull-right" style="margin-top: 0;">v0.0.9</div>
+          </div>
         </div>
-        <div class="col-md-6 col-lg-6 col-xl-6 " >
-            <div class="row top5">
-              <div class="form-group" *ngFor="let titr of titrations">
-                  <div class="">
-                    <div class="justify-content-center" appearance="fill" >
-                      <label class="form-label"  for="descr">{{titr.descr}} - {{titr.units}}</label>
-                      <input class="form-control" type="number" [value]="titr.value" disabled/>
-                    </div>
+        <div class="row align-items-center justify-content-center" style="vertical-align: middle;">
+          <div class="col-md-6 col-lg-6 col-xl-6 ">
+              <div class="row d-flex justify-content-left" appearance="fill">
+                <p>Special size values examples:</p>
+                  <p><b>Nm:</b> 2/60000</p>
+                  <p><b>Ne:</b> 60000/2</p>
+                  <p><b>Dtex:</b> 2*120/4</p>
+              </div>
+              <div class="row align-items-center d-flex justify-content-left" appearance="fill">
+                  <div class="col-sm-4 col-md-4 m-4 justify-content-center" appearance="fill">
+                      <label class="form-label" class="form-label">Size</label>
+                      <input class="form-control" type="text" [(ngModel)]="originalValue"/>
+                  </div>
+                  <div class="col-sm-4 col-md-4 m-4 justify-content-left" appearance="fill"> 
+                      <label class="form-label">Unit</label>
+                      <select class=" form-select" (change)="onChangeUnit($event)" [value]="selectedTitr">
+                        <option *ngFor="let titr of titrations" [value]="titr.descr">
+                            {{titr.descr}}
+                        </option>
+                      </select>
+                  </div>
+
+                  <div class="col-sm-4 col-md-4 m-4 align-items-center" appearance="fill">
+                    <button class="btn btn-primary"  type="button" title="CONVERT" value="CONVERT" (click)="convert()">CONVERT</button>
                   </div>
               </div>
-            </div>
+              <div class="row align-items-center d-flex justify-content-left" appearance="fill">
+
+              </div>
+          </div>
+          <div class="col-md-6 col-lg-6 col-xl-6 " >
+              <div class="row top5">
+                <div class="form-group" *ngFor="let titr of titrations">
+                    <div class="">
+                      <div class="justify-content-center" appearance="fill" >
+                        <label class="form-label"  for="descr">{{titr.descr}} - {{titr.units}}</label>
+                        <input class="form-control" type="number" [value]="titr.value" disabled/>
+                      </div>
+                    </div>
+                </div>
+              </div>
+          </div>
         </div>
-      </div>
+    </div>
   </div>
 </div>
