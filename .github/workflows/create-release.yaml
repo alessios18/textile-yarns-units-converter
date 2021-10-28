@@ -100,7 +100,7 @@ jobs:
           ${{env.command}}
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
-          COMMAND: ${[matrix.command}}
+          COMMAND: ${{matrix.command}}
           NODE_OPTIONS: "--max-old-space-size=4096"
    
 
