@@ -28,6 +28,8 @@ jobs:
         id: create_release
         run: |
           gh release create "${{ env.VERSION }}" -n "${{ env.MESSAGE }}" -t "${{ env.NAME }}"
+      - run: |
+          gh release upload "v${{ env.VERSION }}" "./release/latest-linux.yml#latest-linux.yml"
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
           VERSION: "v${{ steps.package_version.outputs.version }}"
@@ -48,10 +50,6 @@ jobs:
             artifact_name: "textile-yarns-units-converter-${{ needs.Make_GitHub_Release.outputs.version }}.AppImage"
             asset_name: "textile-yarns-units-converter-${{ needs.Make_GitHub_Release.outputs.version }}.AppImage"
             asset_content_type: application/zip
-          - os: ubuntu-latest
-            artifact_name: "latest-linux.yml"
-            asset_name: "latest-linux.yml"
-            asset_content_type: text
           - os: windows-latest
             # by electron-builder  |
             artifact_name: "textile-yarns-units-converter ${{ needs.Make_GitHub_Release.outputs.version }}.exe"
@@ -100,3 +98,18 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
           FILES: "./release/${{ matrix.artifact_name }}#${{ matrix.asset_name }}"
           NODE_OPTIONS: "--max-old-space-size=4096"
+  upload_latest_mac:
+    needs: release
+    name: Upload latest-mac.yml on Release 
+    runs-on: macos-latest
+    steps:
+      - name: Upload latest-mac.yml on Release
+        id: upload_release_latest-mac
+        run: |
+          gh release upload "v${{ steps.package_version.outputs.version }}" "./release/latest-linux.yml#text"
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          NODE_OPTIONS: "--max-old-space-size=4096"
+
+
+    
